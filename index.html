@@ -13,7 +13,8 @@
     <div id="mass" class="col-lg-7 col-md-9 col-sm-11 mt-lg-4 mt-md-4 mx-auto shadow rounded p-4">
         <h2 class="text-light text-center my-4"> WELCOME TO CAPTAIN OIG SHOPPING CART </h2>
          <input type="text" placeholder="Enter an item" class="form-control my-2" id="user">
-          <input type="text" placeholder="Enter the Quantity" class="form-control my-2" id="user2">
+          <input type="number" placeholder="Enter the Quantity" class="form-control my-2" id="user2">
+          <input type="number" placeholder="Enter the amount" class="form-control my-2" id="user3">
         <button id="add" class="btn btn-dark w-30  text-light fw-bold" onclick="addToCart()">Add To Cart</button>
         <hr>
         
@@ -28,6 +29,7 @@
                 <div class="modal-body">
                     <input type="text" placeholder="Item" id="itemName1" class="w-100 text-dark rounded mt-2">
                     <input type="text" placeholder="Quantity" id="itemQuantity1" class="w-100 text-dark rounded mt-3">
+                    <input type="text" placeholder="amount" id="itemAmount1" class="w-100 text-dark rounded mt-3">
                   </div>
                 <div class="modal-footer">
                   <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"></button> -->
@@ -39,15 +41,17 @@
     <script>
         cart = []
             const  addToCart=()=>{
-                if(user.value == "" && user2.value ==""){
+                if(user.value == "" && user2.value =="" && user3.value ==""){
                     alert("Invalid")
                 } else{
                     var customer = {
                         item:user.value,
-                        quantity:user2.value
+                        quantity:user2.value,
+                        amount:user3.value
                     }
                     user.value = ""
                     user2.value = ""
+                    user3.value = ""
                     cart.push(customer)
                     localStorage.setItem("java",JSON.stringify(cart))
                     displayCart()
@@ -60,6 +64,7 @@
                 <td class ="fw-bold text-light">S/N</td>
                 <td class ="fw-bold text-light">ITEM</td>
                 <td class ="fw-bold text-light">QUANTITY</td>
+                <td class ="fw-bold text-light">AMOUNT</td>
                 <td class ="fw-bold text-light">ACTIONS</td>
             </tr>
             `
@@ -69,6 +74,7 @@
                     <td class ="fw-bold text-light">${index +1}</td>
                     <td class ="fw-bold text-light">${cart[index].item}</td>
                     <td class ="fw-bold text-light">${cart[index].quantity}</td>    
+                    <td class ="fw-bold text-light">${cart[index].amount}</td>  
                   <td class ="fw-bold text-light"> <i id="delete" class="fa fa-trash" onclick ="deleteItem(${index})"></i>
                 <i id="edit" class="fa fa-pencil ms-5"data-bs-toggle="modal" data-bs-target="#exampleModal" onclick ="editItem(${index})"></i></td>
           </tr>
@@ -83,9 +89,11 @@
         const editItem =(index)=>{
             var input = itemName1.value;
             var input1= itemQuantity1.value
+           var input2 = itemAmount1.value
             var newDetail ={
                 item:input,
-                quantity:input1
+                quantity:input1,
+                amount: input2
             }
             cart.splice(index, 1, newDetail)
             console.log(cart);
